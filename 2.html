@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcul du PGCD</title>
+    
+</head>
+<body>
+
+    <h2>Calcul du PGCD</h2>
+    <label>Entrez le premier entier :</label>
+    <input type="number" id="nombre1"><br>
+    <br>
+    <label>Entrez le deuxième entier :</label>
+    <input type="number" id="nombre2"><br>
+    <br>
+    <button onclick="calculerEtAfficherPGCD()">Calculer PGCD</button>
+
+    <p id="resultat"></p>
+
+    <script>
+        function calculerPGCD(a, b) {
+            while (b !== 0) {
+                let temp = b;
+                b = a % b;   // On remplace b par le reste de a divisé par b
+                a = temp;
+            }
+            return a;
+        }
+
+        function calculerEtAfficherPGCD() {
+            let nombre1 = document.getElementById("nombre1").value;
+            let nombre2 = document.getElementById("nombre2").value;
+
+            if (!isNaN(nombre1) && !isNaN(nombre2) && nombre1 !== "" && nombre2 !== "") {
+                nombre1 = parseInt(nombre1);
+                nombre2 = parseInt(nombre2);
+
+                
+                nombre1 = (nombre1 < 0) ? -nombre1 : nombre1;
+                nombre2 = (nombre2 < 0) ? -nombre2 : nombre2;
+
+                let pgcd = calculerPGCD(nombre1, nombre2);
+                document.getElementById("resultat").innerText = `Le PGCD de ${nombre1} et ${nombre2} est ${pgcd}`;
+            } else {
+                document.getElementById("resultat").innerText = "Veuillez entrer des nombres entiers valides.";
+            }
+        }
+    </script>
+
+</body>
+</html>

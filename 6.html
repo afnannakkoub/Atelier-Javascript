@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculatrice Simple</title>
+</head>
+<body>
+    <h2>Calculatrice Arithmétique</h2>
+    <label for="nombre1">Nombre 1 :</label>
+    <input type="text" id="nombre1">
+    <br><br>
+    <label for="nombre2">Nombre 2 :</label>
+    <input type="text" id="nombre2">
+    <br><br>
+    <label>Opération :</label><br>
+    <input type="radio" name="operation" value="+" checked> +  <br>
+    <input type="radio" name="operation" value="-"> -      <br>
+    <input type="radio" name="operation" value="*"> *     <br>
+    <input type="radio" name="operation" value="/"> /      <br>
+    <br>
+    <button onclick="calculer()">Calculer</button>
+    <div id="resultat"></div>
+
+    <script>
+        function calculer() {
+            let nombre1 = document.getElementById("nombre1").value;
+            let nombre2 = document.getElementById("nombre2").value;
+            let operation = document.querySelector('input[name="operation"]:checked').value;
+            
+            if (nombre1 === "" || nombre2 === "") {
+                document.getElementById("resultat").textContent = "Veuillez entrer deux nombres.";
+                return;
+            }
+            
+            let num1 = +nombre1;
+            let num2 = +nombre2;
+            let resultat;
+            
+            switch (operation) {
+                case "+":
+                    resultat = num1 + num2;
+                    break;
+                case "-":
+                    resultat = num1 - num2;
+                    break;
+                case "*":
+                    resultat = num1 * num2;
+                    break;
+                case "/":
+                    resultat = num2 !== 0 ? num1 / num2 : "Division par zéro impossible";
+                    break;
+                default:
+                    resultat = "Opération invalide";
+            }
+            
+            document.getElementById("resultat").textContent = "Résultat : " + resultat;
+        }
+    </script>
+</body>
+</html>

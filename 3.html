@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Somme des chiffres</title>
+    <script>
+        function sommeChiffres() {
+            let nombre = document.getElementById("nombre").value;
+            let somme = 0;
+            for (let i = 0; i < nombre.length; i++) {
+                let chiffre = nombre[i];
+                if (chiffre >= '0' && chiffre <= '9') {
+                    somme += parseInt(chiffre);
+                }
+            }
+            document.getElementById("resultat").innerText = "Somme des chiffres : " + somme;
+        }
+    </script>
+</head>
+<body>
+    <h2>Calcul de la somme des chiffres</h2>
+    <input type="text" id="nombre" placeholder="Entrez un nombre">
+    <button onclick="sommeChiffres()">Calculer</button>
+    <p id="resultat"></p>
+</body>
+</html>

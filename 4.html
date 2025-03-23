@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opérations sur les Matrices</title>
+    <script>
+        class Matrix {
+            constructor(size, elements) {
+                this.size = size;
+                this.elements = elements;
+            }
+
+            static add(matrixA, matrixB) {
+                return new Matrix(matrixA.size, matrixA.elements.map((row, i) =>
+                    row.map((val, j) => val + matrixB.elements[i][j])
+                ));
+            }
+
+            static subtract(matrixA, matrixB) {
+                return new Matrix(matrixA.size, matrixA.elements.map((row, i) =>
+                    row.map((val, j) => val - matrixB.elements[i][j])
+                ));
+            }
+
+            static multiply(matrixA, matrixB) {
+                let result = Array.from({ length: matrixA.size }, () => Array(matrixA.size).fill(0));
+                for (let i = 0; i < matrixA.size; i++) {
+                    for (let j = 0; j < matrixA.size; j++) {
+                        for (let k = 0; k < matrixA.size; k++) {
+                            result[i][j] += matrixA.elements[i][k] * matrixB.elements[k][j];
+                        }
+                    }
+                }
+                return new Matrix(matrixA.size, result);
+            }
+
+            transpose() {
+                let result = Array.from({ length: this.size }, () => Array(this.size).fill(0));
+                for (let i = 0; i < this.size; i++) {
+                    for (let j = 0; j < this.size; j++) {
+                        result[j][i] = this.elements[i][j];
+                    }
+                }
+                return new Matrix(this.size, result);
+            }
+
+            print() {
+                return this.elements.map(row => row.join('\t')).join('<br>');
+            }
+        }
+
+        function getMatrixFromInput(id) {
+            let elements = [];
+            for (let i = 0; i < 3; i++) {
+                let row = [];
+                for (let j = 0; j < 3; j++) {
+                    let value = parseInt(document.getElementById(`${id}-${i}-${j}`).value) || 0;
+                    row.push(value);
+                }
+                elements.push(row);
+            }
+            return new Matrix(3, elements);
+        }
+
+        function performOperation(operation) {
+            const matrixA = getMatrixFromInput("matrixA");
+            const matrixB = getMatrixFromInput("matrixB");
+            let result;
+
+            if (operation === 'add') {
+                result = Matrix.add(matrixA, matrixB);
+            } else if (operation === 'subtract') {
+                result = Matrix.subtract(matrixA, matrixB);
+            } else if (operation === 'multiply') {
+                result = Matrix.multiply(matrixA, matrixB);
+            } else if (operation === 'transposeA') {
+                result = matrixA.transpose();
+            }
+
+            document.getElementById("result").innerHTML = result.print();
+        }
+
+        function generateMatrixInputs(id) {
+            let container = document.getElementById(id);
+            container.innerHTML = "";
+            for (let i = 0; i < 3; i++) {
+                for (let j = 0; j < 3; j++) {
+                    let input = document.createElement("input");
+                    input.type = "number";
+                    input.id = `${id}-${i}-${j}`;
+                    input.style.width = "50px";
+                    container.appendChild(input);
+                }
+                container.appendChild(document.createElement("br"));
+            }
+        }
+
+        window.onload = function () {
+            generateMatrixInputs("matrixA");
+            generateMatrixInputs("matrixB");
+        };
+    </script>
+</head>
+<body>
+    <h2>Opérations sur les Matrices</h2>
+    <h3>Matric A :</h3>
+    <div id="matrixA"></div>
+    <h3>Matric B :</h3>
+    <div id="matrixB"></div>
+    <br>
+    <button onclick="performOperation('add')">Addition</button>
+    <button onclick="performOperation('subtract')">Soustraction</button>
+    <button onclick="performOperation('multiply')">Multiplication</button>
+    <button onclick="performOperation('transposeA')">Transposé de A</button>
+    <h3>Résultat :</h3>
+    <p id="result"></p>
+</body>
+</html>

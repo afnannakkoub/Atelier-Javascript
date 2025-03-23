@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrousel d'Images</title>
+    <style>
+        #carrousel {
+            width: 300px;
+            height: 200px;
+            position: relative;
+        }
+        #image {
+            width: 100%;
+            height: 100%;
+        }
+        .bouton {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+        #precedent {
+            left: 10px;
+        }
+        #suivant {
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Carrousel d'Images</h2>
+    <div id="carrousel">
+        <button id="precedent" class="bouton" onclick="precedent()">&#10094;</button>
+        <img id="image" src="A.png" alt="Image du carrousel">
+        <button id="suivant" class="bouton" onclick="suivant()">&#10095;</button>
+    </div>
+
+    <script>
+        let images = ["A.png", "html.png", "logo.png"];
+        let index = 0;
+
+        function precedent() {
+            index = (index - 1 + images.length) % images.length;
+            document.getElementById("image").src = images[index];
+        }
+
+        function suivant() {
+            index = (index + 1) % images.length;
+            document.getElementById("image").src = images[index];
+        }
+    </script>
+</body>
+</html>
